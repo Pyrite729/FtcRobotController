@@ -51,36 +51,35 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  *
  */
 @TeleOp(name = "Robot: Field Relative Mecanum Drive", group = "Robot")
-@Disabled
 public class
 RobotTeleopMecanumFieldRelativeDrive extends OpMode {
     // This declares the four motors needed
-    DcMotor frontLeftDrive;
-    DcMotor frontRightDrive;
-    DcMotor backLeftDrive;
-    DcMotor backRightDrive;
+    DcMotor FLmotor;
+    DcMotor FRmotor;
+    DcMotor BLmotor;
+    DcMotor BRmotor;
 
     // This declares the IMU needed to get the current direction the robot is facing
     IMU imu;
 
     @Override
     public void init() {
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "front_left_drive");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
-        backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
+        FLmotor = hardwareMap.get(DcMotor.class, "FLmotor");
+        FRmotor = hardwareMap.get(DcMotor.class, "FRmotor");
+        BLmotor = hardwareMap.get(DcMotor.class, "BLmotor");
+        BRmotor = hardwareMap.get(DcMotor.class, "BRmotor");
 
         // We set the left motors in reverse which is needed for drive trains where the left
         // motors are opposite to the right ones.
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        BLmotor.setDirection(DcMotor.Direction.REVERSE);
+        FLmotor.setDirection(DcMotor.Direction.REVERSE);
 
         // This uses RUN_USING_ENCODER to be more accurate.   If you don't have the encoder
         // wires, you should remove these
-        frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FLmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FRmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BLmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BRmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         imu = hardwareMap.get(IMU.class, "imu");
         // This needs to be changed to match the orientation on your robot
@@ -137,28 +136,28 @@ RobotTeleopMecanumFieldRelativeDrive extends OpMode {
     public void drive(double forward, double right, double rotate) {
         // This calculates the power needed for each wheel based on the amount of forward,
         // strafe right, and rotate
-        double frontLeftPower = forward + right + rotate;
-        double frontRightPower = forward - right - rotate;
-        double backRightPower = forward + right - rotate;
-        double backLeftPower = forward - right + rotate;
+        double FLmotorPower = forward + right + rotate;
+        double FRmotorPower = forward - right - rotate;
+        double BRmotorPower = forward + right - rotate;
+        double BLmotorPower = forward - right + rotate;
 
         double maxPower = 1.0;
-        double maxSpeed = 1.0;  // make this slower for outreaches
+        double maxSpeed = 0.3;  // make this slower for outreaches
 
         // This is needed to make sure we don't pass > 1.0 to any wheel
         // It allows us to keep all of the motors in proportion to what they should
         // be and not get clipped
-        maxPower = Math.max(maxPower, Math.abs(frontLeftPower));
-        maxPower = Math.max(maxPower, Math.abs(frontRightPower));
-        maxPower = Math.max(maxPower, Math.abs(backRightPower));
-        maxPower = Math.max(maxPower, Math.abs(backLeftPower));
+        maxPower = Math.max(maxPower, Math.abs(FLmotorPower));
+        maxPower = Math.max(maxPower, Math.abs(FRmotorPower));
+        maxPower = Math.max(maxPower, Math.abs(BRmotorPower));
+        maxPower = Math.max(maxPower, Math.abs(BLmotorPower));
 
         // We multiply by maxSpeed so that it can be set lower for outreaches
         // When a young child is driving the robot, we may not want to allow full
         // speed.
-        frontLeftDrive.setPower(maxSpeed * (frontLeftPower / maxPower));
-        frontRightDrive.setPower(maxSpeed * (frontRightPower / maxPower));
-        backLeftDrive.setPower(maxSpeed * (backLeftPower / maxPower));
-        backRightDrive.setPower(maxSpeed * (backRightPower / maxPower));
+        FLmotor.setPower(maxSpeed * (FLmotorPower / maxPower));
+        FRmotor.setPower(maxSpeed * (FRmotorPower / maxPower));
+        BLmotor.setPower(maxSpeed * (BLmotorPower / maxPower));
+        BRmotor.setPower(maxSpeed * (BRmotorPower / maxPower));
     }
 }
