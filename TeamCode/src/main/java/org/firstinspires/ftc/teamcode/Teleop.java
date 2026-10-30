@@ -15,7 +15,7 @@ public class Teleop extends OpMode {
     private MecanumDrive drive;
     private GamepadEx driverOp;
 
-    private double motor_speed = 0.5;
+    public double motor_speed = 0.5;
 
     @Override
     public void init() {
