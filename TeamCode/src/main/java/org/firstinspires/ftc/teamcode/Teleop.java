@@ -27,6 +27,8 @@ public class Teleop extends OpMode {
 
         bL.setInverted(true);
         bR.setInverted(true);
+        fL.setInverted(true);
+        fR.setInverted(true);
 
         drive = new MecanumDrive(fL, fR, bL, bR);
         driverOp = new GamepadEx(gamepad1);
@@ -35,9 +37,9 @@ public class Teleop extends OpMode {
     @Override
     public void loop() {
         drive.driveRobotCentric(
-                driverOp.getLeftX() *motor_speed,
+                -driverOp.getLeftX() *motor_speed,
                 -driverOp.getLeftY() *motor_speed,
-                driverOp.getRightX() *motor_speed
+                -driverOp.getRightX() *motor_speed
         );
         if (gamepad1.circleWasPressed()){
             motor_speed = motor_speed + 0.1;

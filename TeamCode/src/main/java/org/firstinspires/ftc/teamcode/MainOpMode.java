@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "Main TeleOp")
+@TeleOp(name = "Main TeleOp f.c")
 public class MainOpMode extends LinearOpMode {
 
     @Override
@@ -21,7 +21,6 @@ public class MainOpMode extends LinearOpMode {
             double strafe = gamepad1.left_stick_x;
             double rotate = gamepad1.right_stick_x;
 
-            drive.driveFieldRelative(forward, strafe, rotate);
         }
     }
 }

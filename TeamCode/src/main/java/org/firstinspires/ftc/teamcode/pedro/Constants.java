@@ -20,6 +20,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
+
     public static MecanumConfig drivetrainConfig = new MecanumConfig(c -> {
         c.frontLeftName.set("FLmotor");
         c.frontRightName.set("FRmotor");
@@ -39,11 +40,21 @@ public class Constants {
     });
     public static ForesightConfig foresightConfig = new ForesightConfig(
             c -> {
-                Controller primaryTranslationalForward = Controller.proportional(0.23523571646916328);
-                Controller secondaryTranslationalForward = Controller.proportional(0.08691331162124796);
-                Controller primaryTranslationalLateral = Controller.proportional(0.2859550697959422);
-                Controller secondaryTranslationalLateral = Controller.proportional(0.10565275742941196);
 
+                Controller primaryTranslationalForward =
+                        Controller.pid(0.23523571646916328, 0.0, 0.0);
+
+                Controller secondaryTranslationalForward =
+                        Controller.pid(0.08691331162124796, 0.0, 0.0);
+
+                Controller primaryTranslationalLateral =
+                        Controller.pid(0.2859550697959422, 0.0, 0.0);
+
+                Controller secondaryTranslationalLateral =
+                        Controller.pid(0.10565275742941196, 0.0, 0.0);
+
+                Controller headingController =
+                        Controller.pid(3.5394049725618917, 0.0, 0.0);
                 c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
                 c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
 
@@ -60,6 +71,8 @@ public class Constants {
                 c.maxAchievableStrafeVelocity.set(45.80811125945409);
                 c.naturalForwardDeceleration.set(76.1222383535369);
                 c.naturalStrafeDeceleration.set(102.82144408012859);
+
+                c.maxPathSpeed.set(0.6);
             }
     );
     public static Follower create(HardwareMap h) {
