@@ -21,6 +21,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
 
+    private static double kU = 3.5394049725618917;
+    private static double tU = 0.5;
+    private static double kP = 0.6*kU;
+    private static double kI = 2*kP/tU;
+    private static double kD = kP * tU / 8;
     public static MecanumConfig drivetrainConfig = new MecanumConfig(c -> {
         c.frontLeftName.set("FLmotor");
         c.frontRightName.set("FRmotor");
@@ -54,14 +59,14 @@ public class Constants {
                         Controller.pid(0.10565275742941196, 0.0, 0.0);
 
                 Controller headingController =
-                        Controller.pid(3.5394049725618917, 0.0, 0.0);
+                        Controller.pid(kP, kI, kD);
                 c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
                 c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
 
                 c.coast.set(Controller.proportionalFeedforward(0.01431785443810079));
                 c.brake.set(Controller.proportionalFeedforward(0.012170176272385671));
 
-                c.headingFeedback.set(Controller.proportional(3.5394049725618917));
+                c.headingFeedback.set(headingController);
                 c.headingBrakeCoefficients.set(Vector2D.cartesian(0.5101518726982393, -0.15679184101629762));
 
                 c.linearBrakeCoefficients.set(Matrix.diag(0.04698018744499275, 0.03596389314034849));
