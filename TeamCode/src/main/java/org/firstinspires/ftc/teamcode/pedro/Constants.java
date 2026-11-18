@@ -51,6 +51,12 @@ public class Constants {
     private static double kP_s_lat = 0.6*kU_s_lat;
     private static double kI_s_lat = 2*kP_s_lat/tU_s_lat;
     private static double kD_s_lat = kP_s_lat * tU_s_lat / 8;
+
+    static Controller controller_heading = Controller.pid(kP_heading, kI_heading, kD_heading);
+    static Controller controller_forward = Controller.pid(kP_p_forward, kI_p_forward, kD_p_forward);
+    static Controller controller_s_forward = Controller.pid(kP_s_forward, kI_s_forward, kD_s_forward);
+    static Controller controller_s_lat = Controller.pid(kP_s_lat, kI_s_lat, kD_s_lat);
+    Controller controller_p_lat = Controller.pid(kP_p_lat, kI_p_lat, kD_p_lat);
     public static MecanumConfig drivetrainConfig = new MecanumConfig(c -> {
         c.frontLeftName.set("FLmotor");
         c.frontRightName.set("FRmotor");
@@ -72,10 +78,10 @@ public class Constants {
             c -> {
 
                 Controller primaryTranslationalForward =
-                        Controller.pid(kU_p_forward, kI_p_forward, kD_p_forward);
+                        Controller(controller_forward);
 
                 Controller secondaryTranslationalForward =
-                        Controller.pid(kP_s_forward, kI_s_forward, kD_s_forward);
+                        Controller.pid(contoller_s_forward);
 
                 Controller primaryTranslationalLateral =
                         Controller.pid(kP_p_lat, kI_p_lat, kD_p_lat);
@@ -85,7 +91,7 @@ public class Constants {
 
                 Controller headingController =
                         Controller.pid(kP_heading, kI_heading, kD_heading);
-                c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
+                c.forwardTranslational.set(headingController);
                 c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
 
                 c.coast.set(Controller.proportionalFeedforward(0.01431785443810079));
