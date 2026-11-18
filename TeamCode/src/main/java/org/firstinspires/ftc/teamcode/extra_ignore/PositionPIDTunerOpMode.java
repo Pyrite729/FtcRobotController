@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.extra_ignore;
 
 import com.aaravdhawan25.pidautotuner.ftc.PIDMaster;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -43,7 +41,6 @@ public class PositionPIDTunerOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry(),telemetry);
         PIDMaster pid = new PIDMaster(
                 hardwareMap, TuningConfig.MOTOR_NAME, TuningConfig.REVERSED, true,
                 TuningConfig.POSITION_TARGET_TICKS, TuningConfig.POSITION_HYSTERESIS_TICKS,

@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.autos;
 
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+
 import com.pedropathing.api.Paths;
 
 import com.pedropathing.api.PoseFactory;
@@ -17,7 +17,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 
 
 @Autonomous(name = "AutoPath", group = "Autonomous")
@@ -44,10 +43,6 @@ public class auto5 extends LinearOpMode {
         follower.setPose(start);
         follower.update();
 
-        telemetry = new MultipleTelemetry(
-                telemetry,
-                FtcDashboard.getInstance().getTelemetry()
-        );
 
         waitForStart();
         schedule(autoRoutine());

@@ -21,11 +21,36 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
 
-    private static double kU = 3.5394049725618917;
-    private static double tU = 0.5;
-    private static double kP = 0.6*kU;
-    private static double kI = 2*kP/tU;
-    private static double kD = kP * tU / 8;
+    private static double kU_heading = 3.5394049725618917;
+    private static double tU_heading
+            = 0.5;
+    private static double kP_heading = 0.6*kU_heading;
+    private static double kI_heading = 2*kP_heading/tU_heading;
+    private static double kD_heading = kP_heading * tU_heading / 8;
+
+    private static double kU_p_forward = 0.23523571646916328;
+    private static double tU_p_forward = 0.5;
+    private static double kP_p_forward = 0.6*kU_p_forward;
+    private static double kI_p_forward = 2*kP_p_forward/tU_p_forward;
+    private static double kD_p_forward = kP_p_forward * tU_p_forward / 8;
+
+    private static double kU_s_forward = 0.08691331162124796;
+    private static double tU_s_forward = 0.5;
+    private static double kP_s_forward = 0.6*kU_s_forward;
+    private static double kI_s_forward = 2*kP_s_forward/tU_s_forward;
+    private static double kD_s_forward = kP_s_forward * tU_s_forward / 8;
+
+    private static double kU_p_lat = 0.2859550697959422;
+    private static double tU_p_lat = 0.5;
+    private static double kP_p_lat = 0.6*kU_p_lat;
+    private static double kI_p_lat = 2*kP_p_lat/tU_p_lat;
+    private static double kD_p_lat = kP_p_lat * tU_p_lat / 8;
+
+    private static double kU_s_lat = 0.10565275742941196;
+    private static double tU_s_lat = 0.5;
+    private static double kP_s_lat = 0.6*kU_s_lat;
+    private static double kI_s_lat = 2*kP_s_lat/tU_s_lat;
+    private static double kD_s_lat = kP_s_lat * tU_s_lat / 8;
     public static MecanumConfig drivetrainConfig = new MecanumConfig(c -> {
         c.frontLeftName.set("FLmotor");
         c.frontRightName.set("FRmotor");
@@ -47,19 +72,19 @@ public class Constants {
             c -> {
 
                 Controller primaryTranslationalForward =
-                        Controller.pid(0.23523571646916328, 0.0, 0.0);
+                        Controller.pid(kU_p_forward, kI_p_forward, kD_p_forward);
 
                 Controller secondaryTranslationalForward =
-                        Controller.pid(0.08691331162124796, 0.0, 0.0);
+                        Controller.pid(kP_s_forward, kI_s_forward, kD_s_forward);
 
                 Controller primaryTranslationalLateral =
-                        Controller.pid(0.2859550697959422, 0.0, 0.0);
+                        Controller.pid(kP_p_lat, kI_p_lat, kD_p_lat);
 
                 Controller secondaryTranslationalLateral =
-                        Controller.pid(0.10565275742941196, 0.0, 0.0);
+                        Controller.pid(kP_s_lat, kI_s_lat, kD_s_lat);
 
                 Controller headingController =
-                        Controller.pid(kP, kI, kD);
+                        Controller.pid(kP_heading, kI_heading, kD_heading);
                 c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
                 c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
 
